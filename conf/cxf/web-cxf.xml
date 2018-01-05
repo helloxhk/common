@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<!-- 监听器 -->
+	<listener>
+		<!-- 默认从/WEB-INF/applicationContext.xml加载配置文件 -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- spring配置文件 可以采用加载多个文件，中间以半角逗号分隔，也可以使用通配符号 -->
+		<param-value>classpath*:spring/applicationContext.xml,classpath*:spring/applicationContext-*.xml</param-value>
+	</context-param>
+	
+	<!-- OpenSessionInView，解决延迟加载session在web层不可用的问题 将session的生命周期延长到和request一致 -->
+	<filter>
+		<filter-name>OpenSessionInView</filter-name>
+		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>OpenSessionInView</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 配置cxf servlet
+	让cxf发布的webservice服务通过tomcat对外提供服务
+	访问/ws/开头的url时候由CXFServlet解析，按soap协议解析
+	 -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<!-- 请求以/ws/开头的都由cxf解析，解析soap协议 -->
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>

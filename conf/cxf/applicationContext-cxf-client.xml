@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+				            http://www.springframework.org/schema/beans/spring-beans.xsd
+				            http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+				            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+				            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+	<!-- 使用cxf 和spring整合方式，对portType的代理对象放在ioc容器来管理,代理对应就是ioc中的一个bean
+	id：bean的id
+	serviceClass:portType，服务接口类型
+	address：webserivce的地址，不是wsdl的地址
+	 -->
+	<jaxws:client id="ypxxShengService" serviceClass="cn.itcast.yycg.province.service.YpxxShengService"
+	 address="http://localhost:8081/ws/syncypxx">
+
+	</jaxws:client>
+
+</beans>

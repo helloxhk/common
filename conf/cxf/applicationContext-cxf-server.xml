@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
+	   xmlns:jaxrs="http://cxf.apache.org/jaxrs" 
+	   xmlns:cxf="http://cxf.apache.org/core"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			               http://www.springframework.org/schema/beans/spring-beans.xsd
+			               http://cxf.apache.org/jaxrs 
+			               http://cxf.apache.org/schemas/jaxrs.xsd
+			               http://cxf.apache.org/jaxws 
+			               http://cxf.apache.org/schemas/jaxws.xsd
+			               http://cxf.apache.org/core 
+			               http://cxf.apache.org/schemas/core.xsd">
+
+
+<!-- 发布cxf服务
+address：是webservice接口路径
+webservice地址是：http://localhost:8080/ws/syncypxx
+/ws/是在web.xml配置的cxf的servlet的拦截路径
+
+serviceClass：就是 portType(接口类型)
+ -->
+
+<jaxws:server address="/syncypxx" serviceClass="cn.itcast.yycg.province.service.YpxxShengService">  
+	<!-- webservice服务由serviceBean指定的service进行处理 -->
+	<jaxws:serviceBean>
+		<!-- ref引用ioc容器中bean的id -->
+		<ref bean="ypxxShengService"/>
+	
+	</jaxws:serviceBean>
+</jaxws:server>
+
+</beans>

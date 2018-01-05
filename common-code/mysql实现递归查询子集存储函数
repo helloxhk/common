@@ -1,0 +1,25 @@
+--创建Mysql函数
+
+CREATE FUNCTION `getProductCatalogChildList`(parentId INT) RETURNS varchar(10000) CHARSET utf8
+BEGIN 
+	 DECLARE pTemp VARCHAR(10000);  
+	 DECLARE cTemp VARCHAR(10000);
+	
+	 SET pTemp = '$';  
+	 SET cTemp =cast(parentId as CHAR);
+	
+	 WHILE cTemp is not null DO
+		 SET pTemp = concat(pTemp,',',cTemp);
+		 SELECT group_concat(pc_id) INTO cTemp FROM product_catalog
+		 WHERE FIND_IN_SET(pc_parent_id, cTemp) > 0;
+	 END WHILE;
+	 RETURN pTemp;
+ END
+
+
+调用
+
+ select * from product_catalog
+	where 1 = 1
+
+ and find_in_set(parent_id, getProductCatalogChildList(传入的id}))
